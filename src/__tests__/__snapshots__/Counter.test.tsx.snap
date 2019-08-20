@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Counter> 스냅샷 테스트 1`] = `
+<div
+  class="Counter"
+  style="background-color:red"
+>
+  1
+</div>
+`;
