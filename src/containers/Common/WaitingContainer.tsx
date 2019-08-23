@@ -9,16 +9,15 @@ const WatingContainer = () => {
   const waitingProps: IWaitingProps = {
     title,
     guidance,
-    status
-  }
+    status,
+  };
 
   useEffect(() => {
-    fetchWaitingState();
+    const res = fetchWaitingState();
+    console.log(res);
   }, []);
 
-  return (
-    <BarcodeBridge {...waitingProps} />
-  )
-}
+  return <BarcodeBridge {...waitingProps} />;
+};
 
 export default WatingContainer;

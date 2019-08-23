@@ -1,9 +1,9 @@
-import {createContext} from 'react';
+import { createContext } from 'react';
 
-import {INameState} from '../hook/useNameState';
-import {IThemeState} from '../hook/useThemeState';
+import { INameState } from '../hook/useNameState';
+import { IThemeState } from '../hook/useThemeState';
 
 export const AppContext = createContext<{
-  name?: INameState,
-  themeState?: IThemeState
+  name?: INameState;
+  themeState?: IThemeState;
 }>({});

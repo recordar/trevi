@@ -1,11 +1,16 @@
-import {useState} from 'react';
+import { useState } from 'react';
+import { getFireDB } from '../../utils/firebaseUtils';
 
-export interface IWatingState {
+export interface IWating {
   title: string;
   guidance: string;
   contents: string;
   status: string;
+}
+
+export interface IWatingState extends IWating {
   updateTitle: (title: string) => void;
+  updateGuidance: (guidance: string) => void;
   updateContents: (contents: string) => void;
   fetchWaitingState: () => void;
 }
@@ -20,20 +25,26 @@ const useWaitingState = (): IWatingState => {
     setTitle(title);
   };
 
+  const updateGuidance = (guidance: string) => {
+    setGuidance(guidance);
+  };
+
   const updateContents = (contents: string) => {
     setContents(contents);
   };
 
-  const fetchWaitingState = () => {
-    setTimeout(() => {
-      setTitle('준비중입니다');
-      setGuidance('곧 뿅하고 나타날게요<br />잠시만 기다려주세요.');
-    }, 1000);
-
-    setTimeout(() => {
-      setStatus('SUCCESS');
-    }, 40000);
-  }
+  const fetchWaitingState = (): Promise<IWating> => {
+    return getFireDB().then(res => {
+      const { title, guidance, status, contents = '' } = res.val().waiting;
+      setStatus(status);
+      return {
+        title,
+        guidance,
+        contents,
+        status,
+      };
+    });
+  };
 
   return {
     title,
@@ -41,9 +52,10 @@ const useWaitingState = (): IWatingState => {
     contents,
     status,
     updateTitle,
+    updateGuidance,
     updateContents,
-    fetchWaitingState
-  }
+    fetchWaitingState,
+  };
 };
 
 export default useWaitingState;

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot",
     "build": "webpack --mode production",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "webpack --mode production && firebase deploy"
   },
   "keywords": [],
   "author": "",
@@ -48,6 +49,7 @@
     "@types/react-router-dom": "^4.3.4",
     "browser-history": "^1.0.1",
     "connected-react-router": "^6.5.2",
+    "firebase": "^6.4.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -57,14 +59,9 @@
     "redux-thunk": "^2.3.0"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
     "resolver": "jest-pnp-resolver",
-    "setupFiles": [
-      "<rootDir>/src/config/setupTest.js"
-    ],
+    "setupFiles": ["<rootDir>/src/config/setupTest.js"],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
       "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}"
@@ -81,10 +78,7 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
-    "moduleDirectories": [
-      "node_modules",
-      "<rootDir>"
-    ],
+    "moduleDirectories": ["node_modules", "<rootDir>"],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
@@ -106,8 +100,6 @@
         "tsConfig": "tsconfig.test.json"
       }
     },
-    "snapshotSerializers": [
-      "<rootDir>/node_modules/enzyme-to-json/serializer"
-    ]
+    "snapshotSerializers": ["<rootDir>/node_modules/enzyme-to-json/serializer"]
   }
 }

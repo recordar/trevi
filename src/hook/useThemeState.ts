@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
 export interface IThemeState {
   width: string;
@@ -7,7 +7,7 @@ export interface IThemeState {
   updateWidth: (width: string) => void;
   updateHeight: (height: string) => void;
   updateBackground: (background: string) => void;
-};
+}
 
 const useThemeState = (): IThemeState => {
   const [width, setWidth] = useState<string>('10px');
@@ -27,10 +27,13 @@ const useThemeState = (): IThemeState => {
   };
 
   return {
-    width, updateWidth,
-    height, updateHeight,
-    background, updateBackground
+    width,
+    updateWidth,
+    height,
+    updateHeight,
+    background,
+    updateBackground,
   };
-}
+};
 
 export default useThemeState;

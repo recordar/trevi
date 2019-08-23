@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 export interface INameState {
   name: string;
@@ -8,16 +8,19 @@ export interface INameState {
   updateNickName: (nickName: string) => void;
   updateAge: (age: number) => void;
   fetchData: () => void;
-};
+}
 
 const useNameState = (): INameState => {
   const [name, setName] = useState<string>('');
   const [nickName, setNickName] = useState<string>('');
   const [age, setAge] = useState<number>(0);
 
-  useEffect(() => {
-    setAge(19);
-  }, [name]);
+  useEffect(
+    () => {
+      setAge(19);
+    },
+    [name],
+  );
 
   const fetchData = () => {
     // call AXIOS.post with URL, params
@@ -39,10 +42,13 @@ const useNameState = (): INameState => {
   };
 
   return {
-    name, updateName,
-    nickName, updateNickName,
-    age, updateAge,
-    fetchData
+    name,
+    updateName,
+    nickName,
+    updateNickName,
+    age,
+    updateAge,
+    fetchData,
   };
 };
 
