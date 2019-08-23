@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
@@ -9,12 +10,23 @@ module.exports = {
   },
 
    devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
+    contentBase: [path.join(__dirname, './dist')],
+    watchContentBase: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 300
+    },
+    hot: true,
+    host: '0.0.0.0',
     port: 3000,
-    open: true,
+    open: false,
     historyApiFallback: true,
-    stats: 'minimal'
+  },
+
+  output: {
+    filename: `[name].bundle.min.js`,
+    chunkFilename: '[name].chunk.js',
+    path: path.resolve(__dirname, './dist'),
   },
 
   module: {
@@ -57,8 +69,9 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebPackPlugin({
-      template: './src/index.html',
+      template: 'src/index.html',
     })
   ]
 };

@@ -1,25 +1,15 @@
-[debug] [2019-08-20T14:38:11.150Z] ----------------------------------------------------------------------
-[debug] [2019-08-20T14:38:11.151Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
-[debug] [2019-08-20T14:38:11.151Z] CLI Version:   7.2.4
-[debug] [2019-08-20T14:38:11.151Z] Platform:      darwin
-[debug] [2019-08-20T14:38:11.151Z] Node Version:  v10.15.3
-[debug] [2019-08-20T14:38:11.152Z] Time:          Tue Aug 20 2019 23:38:11 GMT+0900 (GMT+09:00)
-[debug] [2019-08-20T14:38:11.152Z] ----------------------------------------------------------------------
+[debug] [2019-08-23T15:34:07.042Z] ----------------------------------------------------------------------
+[debug] [2019-08-23T15:34:07.044Z] Command:       /usr/local/bin/node /usr/local/bin/firebase login
+[debug] [2019-08-23T15:34:07.044Z] CLI Version:   7.2.4
+[debug] [2019-08-23T15:34:07.044Z] Platform:      darwin
+[debug] [2019-08-23T15:34:07.044Z] Node Version:  v10.15.3
+[debug] [2019-08-23T15:34:07.045Z] Time:          Sat Aug 24 2019 00:34:07 GMT+0900 (GMT+09:00)
+[debug] [2019-08-23T15:34:07.045Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-08-20T14:38:11.157Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-08-20T14:38:11.158Z] > authorizing via signed-in user
-[debug] [2019-08-20T14:38:11.158Z] [iam] checking project trevi-5f3a9 for permissions ["firebase.projects.get"]
-[debug] [2019-08-20T14:38:11.159Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/trevi-5f3a9:testIamPermissions  
+[info] i  Firebase optionally collects CLI usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you.
 
-[debug] [2019-08-20T14:38:14.174Z] <<< HTTP RESPONSE 200
-[debug] [2019-08-20T14:38:14.176Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/trevi-5f3a9  
- 
-[debug] [2019-08-20T14:38:14.989Z] <<< HTTP RESPONSE 200
 [info] 
-[info] === Serving from '/Volumes/D/g01.github/trevi'...
+[info] Visit this URL on any device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=147796478&redirect_uri=http%3A%2F%2Flocalhost%3A9005
 [info] 
-[debug] [2019-08-20T14:38:14.993Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/trevi-5f3a9/webApps/-/config  
- 
-[debug] [2019-08-20T14:38:15.807Z] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: dist
-[info] ✔  hosting: Local server: http://localhost:5000
+[info] Waiting for authentication...
