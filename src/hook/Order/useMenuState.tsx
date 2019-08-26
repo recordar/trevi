@@ -79,7 +79,7 @@ const initDrinkCategories: IDrinkCategory[] = [
 ];
 
 
-const useDrinkState = () => {
+const useMenuState = () => {
   const store = useObservable({
     categories: initDrinkCategories
   });
@@ -103,4 +103,4 @@ const useDrinkState = () => {
   };
 }
 
-export default useDrinkState;
+export default useMenuState;

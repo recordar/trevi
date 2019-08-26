@@ -9,7 +9,7 @@ import OrderButton from '../../component/Order/OrderButton';
 import useOrderState from '../../hook/Order/userOrderState';
 import { useOrderButtonStyles } from '../../styles';
 import { IDrink } from '../../interface';
-import useDrinkState from '../../hook/Order/useDrinkState';
+import useMenuState from '../../hook/Order/useMenuState';
 import * as ArrayUtils from '../../utils/ArrayUtils';
 
 const OrderContainer = observer(() => {
@@ -22,7 +22,7 @@ const OrderContainer = observer(() => {
     removeDrink,
     removeAllDrink,
   } = useOrderState();
-  const { categories } = useDrinkState();
+  const { categories } = useMenuState();
   const containerEl = React.useRef(null);
 
   React.useEffect(() => {
