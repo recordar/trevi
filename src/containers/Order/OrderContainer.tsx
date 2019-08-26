@@ -8,93 +8,21 @@ import OrderButton from '../../component/Order/OrderButton';
 
 import useOrderState from '../../hook/Order/userOrderState';
 import { useOrderButtonStyles } from '../../styles';
-import { IDrink, IDrinkCategory } from '../../interface';
-
-
-const initCategories: IDrinkCategory[] = [
-  {
-    category: 'Coffee',
-    summary: 'Caffeine',
-    drinks: [
-      {
-        id: 'HA',
-        label: 'Americano',
-        price: 500,
-      },
-      {
-        id: 'IA',
-        label: 'Ice Americano',
-        price: 500,
-      },
-      {
-        id: 'HL',
-        label: 'Cafe Latte',
-        price: 500,
-      },
-      {
-        id: 'IL',
-        label: 'Ice Cafe Latte',
-        price: 500,
-      },
-      {
-        id: 'HM',
-        label: 'Cafe Mocha',
-        price: 500,
-      },
-      {
-        id: 'IM',
-        label: 'Ice Cafe Mocha',
-        price: 500,
-      }
-    ],
-  },
-  {
-    category: 'Aid',
-    summary: 'Non Caffeine',
-    drinks: [
-      {
-        id: 'LA',
-        label: 'Lemon Aid',
-        price: 500,
-      },
-      {
-        id: 'AA',
-        label: 'Apple Aid',
-        price: 500,
-      },
-    ],
-  },
-  {
-    category: 'Smoothie',
-    summary: 'Ice Blended',
-    drinks: [
-      {
-        id: 'SS',
-        label: 'Strawberry Smoothie',
-        price: 1000,
-      },
-      {
-        id: 'BS',
-        label: 'Blueberry Smoothie',
-        price: 1000,
-      },
-      {
-        id: 'PYS',
-        label: 'Plain Yogurt Smoothie',
-        price: 1000,
-      }
-    ],
-  }
-];
+import { IDrink } from '../../interface';
+import useDrinkState from '../../hook/Order/useDrinkState';
+import * as ArrayUtils from '../../utils/ArrayUtils';
 
 const OrderContainer = observer(() => {
   const classes = useOrderButtonStyles({});
   const {
-    getTotalPrice,
+    totalPrice,
+    totlaCount,
     orderedDrinks,
-    updateDrink,
+    addDrink,
     removeDrink,
+    removeAllDrink,
   } = useOrderState();
+  const { categories } = useDrinkState();
   const containerEl = React.useRef(null);
 
   React.useEffect(() => {
@@ -103,12 +31,12 @@ const OrderContainer = observer(() => {
     el && (document.getElementById('app').style.paddingBottom = `${el.clientHeight}px`);
   }, [orderedDrinks.length]);
 
-  const handleChangeDrinkCount = (drink: IDrink, count: number) => {
-    updateDrink(drink, count);
+  const handleChangeDrinkCount = (drink: IDrink, idAdding: boolean) => {
+    idAdding ? addDrink(drink) : removeDrink(drink);
   };
 
   const handleChipDelete = (drink: IDrink) => {
-    removeDrink(drink);
+    removeAllDrink(drink);
   };
 
   const handleChipClick = (drink: IDrink) => {
@@ -119,17 +47,16 @@ const OrderContainer = observer(() => {
     }
   };
 
-  const getTotalCount = React.useCallback(() => orderedDrinks.reduce((acc, drink) => acc + drink.count, 0), [orderedDrinks]);
-
+  const groupByOrderedDrinkId = ArrayUtils.groupBy(orderedDrinks, ordered => ordered.id);
   return (
     <>
       {
-        initCategories.map(category =>
+        categories.map(category =>
           <DrinkCategory
             {...category}
             orderedDrinks={orderedDrinks}
             onChangeDrinkCount={handleChangeDrinkCount}
-            key={category.category}
+            key={category.name}
           />
         )
       }
@@ -137,20 +64,22 @@ const OrderContainer = observer(() => {
       <Container ref={containerEl} className={classes.container}>
         <div>
           {
-            orderedDrinks.map(orderedDrink =>
-              <OrderChip
-                key={orderedDrink.drink.id}
-                drink={orderedDrink.drink}
-                count={orderedDrink.count}
-                onClick={handleChipClick}
-                onDelete={handleChipDelete}
-              />
-            )
+            Object.keys(groupByOrderedDrinkId).map(key => {
+              return (
+                <OrderChip
+                  key={key}
+                  drink={groupByOrderedDrinkId[key][0]}
+                  count={groupByOrderedDrinkId[key].length}
+                  onClick={handleChipClick}
+                  onDelete={handleChipDelete}
+                />
+              )
+            })
           }
         </div>
         <OrderButton
-          totalCount={getTotalCount()}
-          totalPrice={getTotalPrice()} />
+          totalCount={totlaCount}
+          totalPrice={totalPrice} />
       </Container>
     </>
   );

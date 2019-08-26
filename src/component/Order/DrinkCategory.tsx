@@ -10,11 +10,11 @@ import { IDrink, IOrderedDrink } from '../../interface';
 import { useDrinkCategoryStyles } from '../../styles';
 
 interface IDrinkCategoryProps {
-  category: string;
+  name: string;
   summary: string;
   drinks: IDrink[];
   orderedDrinks: IOrderedDrink[];
-  onChangeDrinkCount: (drink: IDrink, count: number) => void;
+  onChangeDrinkCount: (drink: IDrink, isAdding: boolean) => void;
 }
 
 const DrinkCategory = (props: IDrinkCategoryProps) => {
@@ -25,18 +25,18 @@ const DrinkCategory = (props: IDrinkCategoryProps) => {
     setExpanded(isExpanded ? panel : false);
   }, []);
 
-  const handleChangeDrinkCount = React.useCallback((drink: IDrink, count: number) => {
-    props.onChangeDrinkCount(drink, count);
+  const handleChangeDrinkCount = React.useCallback((drink: IDrink, isAdding: boolean) => {
+    props.onChangeDrinkCount(drink, isAdding);
   }, []);
 
   return (
-    <ExpansionPanel expanded={expanded === props.category} onChange={togglePanel(props.category)}>
+    <ExpansionPanel expanded={expanded === props.name} onChange={togglePanel(props.name)}>
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1bh-content"
         id="panel1bh-header"
       >
-        <Typography className={classes.heading}>{props.category}</Typography>
+        <Typography className={classes.heading}>{props.name}</Typography>
         <Typography className={classes.secondaryHeading}>{props.summary}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>

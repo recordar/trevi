@@ -7,7 +7,7 @@ import { IDrinkList, IDrink, IOrderedDrink } from '../../interface';
 
 interface IDrinkListProps extends IDrinkList {
   orderedDrinks: IOrderedDrink[];
-  onChangeDrinkCount: (drink: IDrink, count: number) => void;
+  onChangeDrinkCount: (drink: IDrink, isAdding: boolean) => void;
 }
 
 const DrinkList = (props: IDrinkListProps) => {
@@ -20,16 +20,16 @@ const DrinkList = (props: IDrinkListProps) => {
     setSelectedIndex(index);
   }, []);
 
-  const handleChangeCount = React.useCallback((drink: IDrink, count: number) => {
-    props.onChangeDrinkCount(drink, count);
+  const handleChangeCount = React.useCallback((drink: IDrink, isAdding: boolean) => {
+    props.onChangeDrinkCount(drink, isAdding);
   }, []);
 
   return (
     <>
       <List component="div" aria-label="secondary mailbox folder" className={classes.root}>
         {props.drinks.map((drink, key) => {
-          const found = props.orderedDrinks.find(order => order.drink.id === drink.id);
-          const count = found ? found.count : 0;
+          const found = props.orderedDrinks.filter(order => order.id === drink.id);
+          const count = found ? found.length : 0;
 
           return (
             <ListItem
@@ -40,7 +40,6 @@ const DrinkList = (props: IDrinkListProps) => {
               onClick={handleListItemClick(key)}
               onBlur={handleListItemClick(-1)}>
               <Drink
-                user=''
                 key={drink.label}
                 drink={drink}
                 count={count}

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useObservable } from 'mobx-react-lite';
 
 import { IOrderedDrink, IOrder, IDrink } from '../../interface';
@@ -20,25 +21,17 @@ const useOrderState = () => {
       store.order.date = new Date();
     },
 
-    removeDrink(drink: IDrink) {
-      store.order.orderedDrinks = store.order.orderedDrinks.filter(ordered => ordered.drink.id !== drink.id);
+    addDrink(drink: IDrink, user: string = '') {
+      store.order.orderedDrinks.push({ user, id: drink.id, label: drink.label, price: drink.price });
     },
 
-    updateDrink(drink: IDrink, count: number) {
-      const found = store.order.orderedDrinks.find((orderedDrink) => orderedDrink.drink.id === drink.id);
-      if (!found) {
-        store.order.orderedDrinks.push({
-          user: '',
-          drink,
-          count: 1
-        });
-      } else {
-        if (count === 0) {
-          store.order.orderedDrinks.splice(store.order.orderedDrinks.indexOf(found), 1);
-        } else {
-          found.count = count;
-        }
-      }
+    removeDrink(drink: IDrink) {
+      const found = store.order.orderedDrinks.find(ordered => ordered.id === drink.id);
+      store.order.orderedDrinks.splice(store.order.orderedDrinks.indexOf(found), 1);
+    },
+
+    removeAllDrink(drink: IDrink) {
+      store.order.orderedDrinks = store.order.orderedDrinks.filter(ordered => ordered.id !== drink.id);
     },
 
     clearDrinks() {
@@ -46,9 +39,8 @@ const useOrderState = () => {
     }
   });
 
-  const getTotalPrice = () => {
-    return store.order.orderedDrinks.reduce((acc, order) => acc + (order.drink.price * order.count), 0);
-  }
+  const totalPrice = React.useMemo(() => store.order.orderedDrinks.reduce((acc, order) => acc + order.price, 0), [store.order.orderedDrinks.length]);
+  const totlaCount = store.order.orderedDrinks.length;
 
   return {
     owner: store.order.owner,
@@ -57,10 +49,12 @@ const useOrderState = () => {
 
     setOwner: store.setOwner,
     updateDate: store.updateDate,
+    addDrink: store.addDrink,
     removeDrink: store.removeDrink,
-    updateDrink: store.updateDrink,
+    removeAllDrink: store.removeAllDrink,
     clearDrinks: store.clearDrinks,
-    getTotalPrice,
+    totalPrice,
+    totlaCount,
   };
 }
 

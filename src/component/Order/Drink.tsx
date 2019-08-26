@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { TextField, Icon, Typography } from '@material-ui/core';
 
-import { IOrderedDrink, IDrink } from '../../interface';
+import { IDrink } from '../../interface';
 import { useDrinkStyles } from '../../styles';
 
-interface IDrinkProps extends IOrderedDrink {
-  onChangeCount: (drink: IDrink, count: number) => void;
+interface IDrinkProps {
+  drink: IDrink;
+  count: number;
+  onChangeCount: (drink: IDrink, isAdding: boolean) => void;
   children?: IDrinkProps[];
 }
 
@@ -15,12 +17,12 @@ const Drink = (props: IDrinkProps) => {
 
   const handleRemoveCount = React.useCallback(() => {
     if (0 < count) {
-      props.onChangeCount(drink, count - 1)
+      props.onChangeCount(drink, false);
     }
   }, [count]);
 
   const handleAddCount = React.useCallback(() => {
-    props.onChangeCount(drink, count + 1);
+    props.onChangeCount(drink, true);
   }, [count]);
 
   return (

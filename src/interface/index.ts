@@ -5,7 +5,7 @@ export interface IHeaderBar {
 }
 
 export interface IDrinkCategory {
-  category: string;
+  name: string;
   summary: string;
   drinks: IDrink[];
 }
@@ -26,8 +26,6 @@ export interface IOrder {
   orderedDrinks: IOrderedDrink[];
 }
 
-export interface IOrderedDrink {
+export interface IOrderedDrink extends IDrink {
   user: string;
-  drink: IDrink;
-  count: number;
 }
