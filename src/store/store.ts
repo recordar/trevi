@@ -1,6 +1,6 @@
-import { useLocalStore } from "mobx-react-lite";
+import { observable } from 'mobx';
 
-import { IDrinkCategory } from "../../interface";
+import { IDrinkCategory } from "../interface";
 
 const initDrinkCategories: IDrinkCategory[] = [
   {
@@ -78,29 +78,39 @@ const initDrinkCategories: IDrinkCategory[] = [
   }
 ];
 
+const Cities = [
+  'Amsterdam',
+  'London',
+  'Madrid'
+];
 
-const useMenuState = () => {
-  const store = useLocalStore(() => ({
-    categories: initDrinkCategories
-  }));
-
-  const addDrink = (id: string, label: string, price: number, ctname: string, summary?: string) => {
-    const found = store.categories.find(category => category.name === ctname);
-    if (found) {
-      found.drinks.push({ id, label, price });
-    } else {
-      store.categories.push({
-        name: ctname,
-        summary,
-        drinks: [{ id, label, price }]
-      });
+export const createCitiesStore = () => {
+  const store = {
+    get allCities() {
+      return Cities;
+    },
+    query: observable.box(''),
+    setQuery(query: string) {
+      store.query.set(query.toLowerCase());
+    },
+    get filteredCities() {
+      return Cities.filter(city => city.toLowerCase().includes(store.query.get()))
     }
-  }
-
-  return {
-    categories: store.categories,
-    addDrink
   };
+
+  return store;
 }
 
-export default useMenuState;
+export type TStore = ReturnType<typeof createCitiesStore>
+
+export const createDrinkCategoryStore = () => {
+  const store = {
+    get allCategories() {
+      return initDrinkCategories
+    },
+  };
+
+  return store;
+}
+
+export type TDrinkCategoryStore = ReturnType<typeof createDrinkCategoryStore>

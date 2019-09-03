@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useObservable } from 'mobx-react-lite';
+import { useLocalStore } from 'mobx-react-lite';
 
 import { IOrderedDrink, IOrder, IDrink } from '../../interface';
 
@@ -10,7 +10,7 @@ const initOrder: IOrder = {
 }
 
 const useOrderState = () => {
-  const store = useObservable({
+  const store = useLocalStore(() => ({
     order: initOrder,
 
     setOwner(owner: string) {
@@ -37,7 +37,7 @@ const useOrderState = () => {
     clearDrinks() {
       store.order.orderedDrinks = Array<IOrderedDrink>();
     }
-  });
+  }));
 
   const totalPrice = React.useMemo(() => store.order.orderedDrinks.reduce((acc, order) => acc + order.price, 0), [store.order.orderedDrinks.length]);
   const totlaCount = store.order.orderedDrinks.length;
