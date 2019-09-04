@@ -6,6 +6,11 @@
     "module": "commonjs",
     "target": "es6",
     "jsx": "react",
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "sourceRoot": "/",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
   }
 }

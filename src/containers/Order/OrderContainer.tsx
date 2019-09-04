@@ -1,42 +1,30 @@
 import * as React from 'react';
-import { observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react';
 import { Container } from '@material-ui/core';
 
-import DrinkCategory from '../../component/Order/DrinkCategory';
-import OrderChip from '../../component/Order/OrderChip';
-import OrderButton from '../../component/Order/OrderButton';
+import DrinkCategory from '~/component/Order/DrinkCategory'
+import OrderChip from '~/component/Order/OrderChip';
+import OrderButton from '~/component/Order/OrderButton';
 
-import useOrderState from '../../hook/Order/userOrderState';
 import { useOrderButtonStyles } from '../../styles';
-import { IDrink } from '../../interface';
-import useMenuState from '../../hook/Order/useMenuState';
-import * as ArrayUtils from '../../utils/ArrayUtils';
+import { IDrink } from '~/interface';
+import * as ArrayUtils from '~/utils/ArrayUtils';
 
-const OrderContainer = observer(() => {
+import stores from '~/stores';
+
+const OrderContainer = () => {
   const classes = useOrderButtonStyles({});
-  const {
-    totalPrice,
-    totlaCount,
-    orderedDrinks,
-    addDrink,
-    removeDrink,
-    removeAllDrink,
-  } = useOrderState();
-  const { categories } = useMenuState();
+  const { orderStore, menuStore } = stores;
   const containerEl = React.useRef(null);
 
   React.useEffect(() => {
     // Container 가 높아짐에따라 주문영역 가려지는 부분 해결
     const el = containerEl.current;
     el && (document.getElementById('app').style.paddingBottom = `${el.clientHeight}px`);
-  }, [orderedDrinks.length]);
+  }, [orderStore.orderedDrinks.length]);
 
   const handleChangeDrinkCount = (drink: IDrink, idAdding: boolean) => {
-    idAdding ? addDrink(drink) : removeDrink(drink);
-  };
-
-  const handleChipDelete = (drink: IDrink) => {
-    removeAllDrink(drink);
+    idAdding ? orderStore.addDrink(drink) : orderStore.removeDrink(drink);
   };
 
   const handleChipClick = (drink: IDrink) => {
@@ -47,14 +35,18 @@ const OrderContainer = observer(() => {
     }
   };
 
-  const groupByOrderedDrinkId = ArrayUtils.groupBy(orderedDrinks, ordered => ordered.id);
+  const handleChipDelete = (drink: IDrink) => {
+    orderStore.removeAllDrink(drink);
+  };
+
+  const groupByOrderedDrinkId = ArrayUtils.groupBy(orderStore.orderedDrinks, ordered => ordered.id);
   return (
     <>
       {
-        categories.map(category =>
+        menuStore.categories.map(category =>
           <DrinkCategory
             {...category}
-            orderedDrinks={orderedDrinks}
+            orderedDrinks={orderStore.orderedDrinks}
             onChangeDrinkCount={handleChangeDrinkCount}
             key={category.name}
           />
@@ -78,11 +70,11 @@ const OrderContainer = observer(() => {
           }
         </div>
         <OrderButton
-          totalCount={totlaCount}
-          totalPrice={totalPrice} />
+          totalCount={orderStore.totalCount}
+          totalPrice={orderStore.totalPrice} />
       </Container>
     </>
   );
-});
+};
 
-export default OrderContainer;
+export default observer(OrderContainer);

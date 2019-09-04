@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 
-import useBarcodeBridge from '../../hook/Common/useWaitingState';
+import useBarcodeBridge from '../../_hook/Common/useWaitingState';
 import BarcodeBridge, { IWaitingProps } from '../../component/Common/Waiting';
 
 const WatingContainer = () => {

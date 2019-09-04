@@ -1,12 +1,14 @@
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 const path = require('path');
 
 module.exports = {
   devtool: "source-map",
 
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js"],
+    plugins: [new TsConfigPathsPlugin()]
   },
 
    devServer: {
