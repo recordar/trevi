@@ -20,7 +20,9 @@ const OrderContainer = () => {
   React.useEffect(() => {
     // Container 가 높아짐에따라 주문영역 가려지는 부분 해결
     const el = containerEl.current;
-    el && (document.getElementById('app').style.paddingBottom = `${el.clientHeight}px`);
+    if (el) {
+      (document.getElementById('app').style.paddingBottom = `${el.clientHeight}px`)
+    }
   }, [orderStore.orderedDrinks.length]);
 
   const handleChangeDrinkCount = (drink: IDrink, idAdding: boolean) => {
